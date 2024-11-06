@@ -528,27 +528,6 @@ fi
 
 "$FRAMEWORK" post-compile "$BUILD_DIR" "$CACHE_DIR" || true
 
-status "Vendoring binaries into slug"
-
-mv /app/vendor/nginx vendor/nginx
-mv /app/vendor/php vendor/php
-[ -d "/app/vendor/libmcrypt" ] && mv /app/vendor/libmcrypt vendor/libmcrypt
-[ -d "/app/vendor/libonig" ] && mv /app/vendor/libonig vendor/libonig
-[ -d "/app/vendor/libzip" ] && mv /app/vendor/libzip vendor/libzip
-[ -d "/app/vendor/libmemcached" ] && mv /app/vendor/libmemcached vendor/libmemcached
-[ -d "/app/vendor/gmp" ] && mv /app/vendor/gmp vendor/gmp
-[ -d "/app/vendor/libtidy" ] && mv /app/vendor/libtidy vendor/libtidy
-[ -d "/app/vendor/libsodium" ] && mv /app/vendor/libsodium vendor/libsodium
-[ -d "/app/vendor/libwebp" ] && mv /app/vendor/libwebp vendor/libwebp
-[ -d "/app/vendor/oracle-client" ] && mv /app/vendor/oracle-client vendor/oracle-client
-
-mkdir -p "bin" "vendor/bin"
-
-# If this buildpack is run after the nodejs buildpack remove the WEB_CONCURRENCY script
-if [ -f "$BUILD_DIR/.profile.d/WEB_CONCURRENCY.sh" ] ; then
-  rm "$BUILD_DIR/.profile.d/WEB_CONCURRENCY.sh"
-fi
-
 cat > "bin/run" <<SH
 #!/usr/bin/env bash
 
